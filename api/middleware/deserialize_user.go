@@ -30,6 +30,8 @@ func DeserializeUser(c *fiber.Ctx) error {
 	}
 
 	c.Locals("email", payload.Email)
+	c.Locals("id", payload.ID)
+
 	return c.Next()
 
 }

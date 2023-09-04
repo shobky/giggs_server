@@ -26,6 +26,8 @@ func main() {
 
 	router.Auth(app)
 	router.User(app)
+	router.Websocket(app)
+	router.Chat(app)
 	app.Listen(":6969")
 
 }

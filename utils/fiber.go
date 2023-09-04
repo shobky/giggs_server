@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -33,8 +34,27 @@ func ParseBodyAndValidate(ctx *fiber.Ctx, body interface{}) *fiber.Error {
 	return Validate(body)
 }
 
-// GetUser is helper function for getting authenticated user's id
-func GetUser(c *fiber.Ctx) *uint {
-	id, _ := c.Locals("USER").(uint)
-	return &id
+func ToString(value interface{}) (string, *fiber.Error) {
+	if value == "" {
+		return "", fiber.NewError(400, "Value is empty.")
+	}
+
+	newString, ok := value.(string)
+	if !ok {
+		return "", fiber.NewError(400, "Something went wrong.")
+	}
+
+	return newString, nil
 }
+
+func StringToUint(value string) uint {
+	ui64, _ := strconv.ParseUint(value, 10, 64)
+	ui := uint(ui64)
+	return ui
+}
+
+// GetUser is helper function for getting authenticated user's id
+// func GetUser(c *fiber.Ctx) *uint {
+// 	id, _ := c.Locals("USER").(uint)
+// 	return &id
+// }
